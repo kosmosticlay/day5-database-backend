@@ -66,3 +66,33 @@ export const updateOne = async (req, res) => {
     return res.status(500).json({ error: e.stack });
   }
 };
+
+// 댓글 삭제 기능
+export const deleteOne = async (req, res) => {
+  const { commentId } = req.params;
+  const { customerId } = req.body;
+
+  if (!commentId || !customerId) {
+    return res.status(400).json({ error: "Bad Request" });
+  }
+
+  try {
+    // 댓글 작성자 확인
+    const comment = await prisma.film_comment.findUnique({
+      where: { comment_id: Number(commentId) }
+    });
+
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+
+    if (comment.customer_id !== Number(customerId)) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const result = await commentDelete(Number(commentId));
+    return res.status(200).json({ data: result });
+  } catch (e) {
+    return res.status(500).json({ error: e.stack });
+  }
+};

@@ -41,3 +41,11 @@ export const commentUpdate = async (comment_id, content) =>
       updated_at: new Date(),
     },
   });
+
+// 댓글 데이터베이스에서 삭제하기 
+export const commentDelete = async (comment_id) =>
+  prisma.film_comment.delete({
+    where: {
+      comment_id,
+    },
+  });

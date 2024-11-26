@@ -8,6 +8,7 @@ import { postRouter } from "./feature/post/router.mjs";
 import { likeRouter } from "./feature/like/router.mjs";
 import {
   commentCreateRouter,
+  commentDeleteRouter,
   commentGetRouter,
   commentUpdateRouter,
 } from "./feature/comment/router.mjs";
@@ -44,6 +45,8 @@ app.use(
 app.get("/film/post/:postId/comment", commentGetRouter);
 app.post("/film/post/:postId/comment", commentCreateRouter);
 app.put("/film/post/:postId/comment/:commentId", commentUpdateRouter);
+app.delete("/film/post/:postId/comment/:commentId", commentDeleteRouter);
+
 app.use("/film/post/like", likeRouter);
 app.use("/film/post", postRouter);
 app.use("/film", filmRouter);

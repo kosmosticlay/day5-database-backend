@@ -29,3 +29,15 @@ export const commentCreate = async ({ post_id, customer_id, content }) =>
       customer_id,
     },
   });
+
+// 수정한 댓글 데이터베이스에 업데이트하기 
+export const commentUpdate = async (comment_id, content) =>
+  prisma.film_comment.update({  
+    where: {
+      comment_id,
+    },
+    data: {
+      content,
+      updated_at: new Date(),
+    },
+  });
